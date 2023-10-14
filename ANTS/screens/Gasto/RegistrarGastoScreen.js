@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Picker } from 'react-native';
+
 
 const RegistrarGastoFormulario = () => {
   const [cantidad, setCantidad] = useState('');
   const [descripcion, setDescripcion] = useState('');
+  const [otros, setOtros] = useState(''); // Estado para el campo "otros"
+
 
   const registrarGasto = async () => {
     // Crea un objeto de gasto con los datos ingresados por el usuario
@@ -40,21 +43,65 @@ const RegistrarGastoFormulario = () => {
   };
 
   return (
-    <View>
-      <TextInput
-        placeholder="Cantidad"
-        value={cantidad}
-        onChangeText={(text) => setCantidad(text)}
-        keyboardType="numeric" // Esto configura el teclado en modo numérico
-      />
-      <TextInput
-        placeholder="Descripción"
-        value={descripcion}
-        onChangeText={(text) => setDescripcion(text)}
-      />
-      <Button title="Registrar" onPress={registrarGasto} />
+    <View style={styles.container}>
+        <Text style={styles.text}>Monto</Text>
+        <TextInput
+            style={styles.input}
+            placeholder="Ingresa el monto en pesos colombianos"
+            onChangeText={(text) => setCantidad(text)}
+        />
+        <Text style={styles.text}>Descripción</Text>
+        <Picker
+            selectedValue={descripcion}
+            onValueChange={(itemValue) => setDescripcion(itemValue)}
+            style={styles.input}
+        >
+            <Picker.Item label="Transporte" value="transporte" />
+            <Picker.Item label="Comida" value="comida" />
+            <Picker.Item label="Otros" value="otros" />
+        </Picker>
+        {descripcion === 'otros' && (
+            <View style={styles.otrosContainer}>
+                <Text style={styles.text}>Otro</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Especifica otra descripción"
+                    onChangeText={(text) => setOtros(text)}
+                />
+            </View>
+        )}
+        <Button title="Aceptar Ingreso" color="#0F0E0E" onPress={handleAceptarIngreso} />
     </View>
   );
-};
+}
 
-export default RegistrarGastoFormulario;
+export default GastoHormigaScreen;
+
+const styles = StyleSheet.create({
+container: {
+    flex: 1,
+    backgroundColor: '#0F0E0E',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+},
+text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+},
+input: {
+    width: '80%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    padding: 10,
+    marginBottom: 20,
+    backgroundColor: '#fff',
+},
+otrosContainer: { // Estilo para el View de "otros"
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    },
+});
