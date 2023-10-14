@@ -53,7 +53,7 @@ function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('./recursos/Logo.png')}
+        source={require('./recursos/Logo.jpeg')}
         style={styles.circularImage} // Agrega esta línea
       />
       <Text style={styles.projectName}>Ingrese su cuenta para ANTS</Text>
