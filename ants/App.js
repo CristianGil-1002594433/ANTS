@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, TextInput, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import MenuScreen from './menu/menu'; // Importa la pantalla del menú
+import MenuScreen from './screens/Menu/menu'; // Importa la pantalla del menú
 import GastoHormigaScreen from './screens/Gasto/RegistrarGastoScreen'; // Importa la pantalla de "Ingresar Gasto Hormiga"
 
 
