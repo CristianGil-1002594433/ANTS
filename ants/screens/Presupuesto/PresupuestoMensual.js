@@ -4,14 +4,42 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos CSS
 
 function PresupuestoMensualScreen() {
-    const [monto, setMonto] = useState('');
+    const [objetivo, setObjetivo] = useState('');
     const [fecha, setFecha] = useState(null); // Estado para la fecha
-    const [descripcion, setDescripcion] = useState('');
 
-    const handleAceptarIngreso = () => {
-        // Lógica de ingreso de presupuesto mensual
-        console.log("Datos cargados")
-    };
+    const registrarPresupuesto = async () => {
+        // Crea un objeto de presupuesto con los datos ingresados por el usuario
+        const presupuesto = {
+          id: "",
+          cantidad: 0, // Asegúrate de que cantidad sea un número (float)
+          id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
+          fecha : null,
+          objetivo: objetivo
+        };
+    
+        // Realiza una solicitud POST a tu API de FastAPI para registrar el presupuesto
+        try {
+          const response = await fetch('http://localhost:8000/presupuesto/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(presupuesto),
+          });
+    
+          // Verifica si la solicitud fue exitosa
+          if (response.ok) {
+            // El presupuesto se registró correctamente
+            // Puedes redirigir al presupuesto o mostrar un mensaje de éxito
+            console.log('presupuesto registrado exitosamente');
+          } else {
+            // Maneja errores de registro aquí
+            console.error('Error al registrar presupuesto');
+          }
+        } catch (error) {
+          console.error('Error de red al registrar presupuesto:', error);
+        }
+      };
 
     return (
         <View style={styles.container}>
@@ -19,8 +47,8 @@ function PresupuestoMensualScreen() {
             <TextInput
                 style={styles.input}
                 placeholder="Ingresa el presupuesto mensual en pesos colombianos"
-                onChangeText={(text) => setMonto(text)}
-                value={monto}
+                onChangeText={(text) => setObjetivo(text)}
+                value={objetivo}
                 keyboardType="numeric"
             />
             <Text style={styles.text}>Fecha</Text>
@@ -31,14 +59,8 @@ function PresupuestoMensualScreen() {
                 dateFormat="yyyy-MM"
                 showMonthYearPicker
             />
-            <Text style={styles.text}>Descripción</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Ingrese una descripción o propósito para el mes"
-                onChangeText={(text) => setDescripcion(text)}
-                value={descripcion}
-            />
-            <Button title="Aceptar Ingreso" color="#0F0E0E" onPress={handleAceptarIngreso} />
+
+            <Button title="Aceptar Ingreso" color="#0F0E0E" onPress={registrarPresupuesto} />
         </View>
     );
 }
