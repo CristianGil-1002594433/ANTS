@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MenuScreen from './screens/Menu/menu'; // Importa la pantalla del menú
 import GastoHormigaScreen from './screens/Gasto/RegistrarGastoScreen'; // Importa la pantalla de "Ingresar Gasto Hormiga"
+import PresupuestoMensualScreen from './screens/Presupuesto/PresupuestoMensual'; 
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,11 @@ export default function App() {
           name="GastoHormiga"
           component={GastoHormigaScreen}
           options={{ title: 'Ingresar Gasto Hormiga' }}
+        />
+        <Stack.Screen
+          name="PresupuestoMensual"
+          component={PresupuestoMensualScreen}
+          options={{ title: 'Ingresar Presupuesto Mensual' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

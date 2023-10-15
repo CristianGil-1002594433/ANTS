@@ -1,29 +1,58 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 function MenuScreen() {
-  const navigation = useNavigation(); // Obtén la instancia de navegación
+  const navigation = useNavigation();
 
   const handleIngresarGasto = () => {
-    //Logica del gasto hormiga
-    navigation.navigate('GastoHormiga'); // Navega a la pantalla "GastoHormiga"
+    // Lógica del gasto hormiga
+    navigation.navigate('GastoHormiga');
   };
 
   const handleAgregarPresupuesto = () => {
-    //Logica del presupuesto mensual
+    // Lógica del presupuesto mensual
+    navigation.navigate('PresupuestoMensual');
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Ingresar Gasto Hormiga" onPress={handleIngresarGasto}/>
-      <View style={{ marginTop: 50 }} /> {/* Espacio entre los botones */}
-      <Button title="Ingresar Presupuesto" onPress={handleAgregarPresupuesto}/>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleIngresarGasto}>
+        <Text style={styles.buttonText}>Ingresar Gasto Hormiga</Text>
+      </TouchableOpacity>
+      <View style={styles.buttonSpacing} />
+      <TouchableOpacity style={styles.button} onPress={handleAgregarPresupuesto}>
+        <Text style={styles.buttonText}>Ingresar Presupuesto</Text>
+      </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0F0E0E',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: '#fff',
+    width: '80%',
+    padding: 15,
+    marginBottom: 20,
+    borderRadius: 20,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  buttonSpacing: {
+    marginTop: 50,
+  },
+});
 
 export default MenuScreen;
