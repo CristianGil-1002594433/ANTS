@@ -3,8 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, TextInput, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import MenuScreen from './menu/menu'; // Importa la pantalla del menú
+import MenuScreen from './screens/Menu/menu'; // Importa la pantalla del menú
 import GastoHormigaScreen from './screens/Gasto/RegistrarGastoScreen'; // Importa la pantalla de "Ingresar Gasto Hormiga"
+import PresupuestoMensualScreen from './screens/Presupuesto/PresupuestoMensual'; 
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,11 @@ export default function App() {
           name="GastoHormiga"
           component={GastoHormigaScreen}
           options={{ title: 'Ingresar Gasto Hormiga' }}
+        />
+        <Stack.Screen
+          name="PresupuestoMensual"
+          component={PresupuestoMensualScreen}
+          options={{ title: 'Ingresar Presupuesto Mensual' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -53,7 +59,7 @@ function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('./recursos/Logo.png')}
+        source={require('./recursos/Logo.jpeg')}
         style={styles.circularImage} // Agrega esta línea
       />
       <Text style={styles.projectName}>Ingrese su cuenta para ANTS</Text>
