@@ -18,6 +18,11 @@ function MenuScreen() {
     navigation.navigate('PresupuestoMensual');
   };
 
+  const handleConsultarPresupuesto = () =>{
+    //Logica de consulta del presupuesto
+    navigation.navigate('ConsultaPresupuestoMensual');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleIngresarGasto}>
@@ -26,6 +31,10 @@ function MenuScreen() {
       <View style={styles.buttonSpacing} />
       <TouchableOpacity style={styles.button} onPress={handleAgregarPresupuesto}>
         <Text style={styles.buttonText}>Ingresar Presupuesto</Text>
+      </TouchableOpacity>
+      <View style={styles.buttonSpacing} />
+      <TouchableOpacity style={styles.button} onPress={handleConsultarPresupuesto}>
+        <Text style={styles.buttonText}>Consultar P. Mensual</Text>
       </TouchableOpacity>
     </View>
   );

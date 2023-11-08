@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MenuScreen from './screens/Menu/menu'; // Importa la pantalla del menú
 import GastoHormigaScreen from './screens/Gasto/RegistrarGastoScreen'; // Importa la pantalla de "Ingresar Gasto Hormiga"
 import PresupuestoMensualScreen from './screens/Presupuesto/PresupuestoMensual'; 
+import ConsultaPresupuestoMensualScreen from './screens/Presupuesto/consultaPresupuesto';
 
 
 const Stack = createStackNavigator();
@@ -33,7 +34,12 @@ export default function App() {
         <Stack.Screen
           name="PresupuestoMensual"
           component={PresupuestoMensualScreen}
-          options={{ title: 'Ingresar Presupuesto Mensual' }}
+          options={{ title: 'Ingresar Presupuesto' }}
+        />
+        <Stack.Screen
+          name="ConsultaPresupuestoMensual"
+          component={ConsultaPresupuestoMensualScreen}
+          options={{ title: 'Consultar Presupuesto' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -62,7 +68,7 @@ function LoginScreen({ navigation }) {
         source={require('./recursos/Logo.jpeg')}
         style={styles.circularImage} // Agrega esta línea
       />
-      <Text style={styles.projectName}>Ingrese su cuenta para ANTS</Text>
+      <Text style={styles.projectName}>ANTS</Text>
       <TextInput
         style={styles.input}
         placeholder="Usuario"
@@ -74,9 +80,17 @@ function LoginScreen({ navigation }) {
         placeholder="Contraseña"
         secureTextEntry={true}
       />
-      <Button title="Iniciar Sesión" onPress={handleLogin} color="#0F0E0E" style={styles.button} />
+      <Button
+        title="Iniciar Sesión" 
+        onPress={handleLogin}
+        color="#63a1ff" 
+        style={styles.button} />
       <View style={{ marginTop: 10 }} /> {/* Espacio entre los botones */}
-      <Button title="Cancelar" onPress={handleCancel} color="#0F0E0E" style={styles.button} />
+      <Button 
+        title="Cancelar" 
+        onPress={handleCancel} 
+        color="#63a1ff" 
+        style={styles.button} />
       <StatusBar style="auto" />
     </View>
   );
@@ -115,8 +129,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   button: {
-    marginTop: 10,
-    marginBottom: 10,
+    height: 40, // Establece la altura deseada
+    borderColor: '#63a1ff',
+    borderWidth: 2,
     borderRadius: 10,
+    padding: 10,
   },
 });

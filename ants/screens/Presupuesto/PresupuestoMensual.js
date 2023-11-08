@@ -18,7 +18,7 @@ function PresupuestoMensualScreen() {
             <Text style={styles.text}>Presupuesto Mensual</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Ingresa el presupuesto mensual en pesos colombianos"
+                placeholder="Presupuesto $"
                 onChangeText={(text) => setMonto(text)}
                 value={monto}
                 keyboardType="numeric"
@@ -34,11 +34,11 @@ function PresupuestoMensualScreen() {
             <Text style={styles.text}>Descripción</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Ingrese una descripción o propósito para el mes"
+                placeholder="Descripcion"
                 onChangeText={(text) => setDescripcion(text)}
                 value={descripcion}
             />
-            <Button title="Aceptar Ingreso" color="#0F0E0E" onPress={handleAceptarIngreso} />
+            <Button title="Aceptar Ingreso" color="#63a1ff" onPress={handleAceptarIngreso} />
         </View>
     );
 }
