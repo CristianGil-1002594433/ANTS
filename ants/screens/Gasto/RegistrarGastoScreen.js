@@ -51,7 +51,7 @@ const RegistrarGastoFormulario = () => {
         <Text style={styles.text}>Cantidad</Text>
         <TextInput
             style={styles.input}
-            placeholder="Cantidad en pesos colombianos"
+            placeholder="Cantidad $"
             value={cantidad}
             onChangeText={(text) => setCantidad(text)}
             keyboardType="numeric" // Esto configura el teclado en modo numérico
