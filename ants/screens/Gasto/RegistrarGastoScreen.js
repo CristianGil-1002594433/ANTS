@@ -7,6 +7,11 @@ const RegistrarGastoFormulario = () => {
   const [otro, setOtros] = useState('');
 
   const registrarGasto = async () => {
+    // Validar que la cantidad no sea negativa
+    if (parseFloat(cantidad) < 0) {
+      console.error('La cantidad no puede ser negativa');
+      return;
+    }
     // Crea un objeto de gasto con los datos ingresados por el usuario
     const gasto = {
       id: "",
