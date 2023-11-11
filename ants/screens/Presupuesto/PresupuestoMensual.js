@@ -5,19 +5,17 @@ import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos CSS
 
 function PresupuestoMensualScreen() {
     const [objetivo, setObjetivo] = useState('');
-    const [fecha, setFecha] = useState(null); // Estado para la fecha
+    const [fecha, setFecha] = useState(null);
 
     const registrarPresupuesto = async () => {
-        // Crea un objeto de presupuesto con los datos ingresados por el usuario
         const presupuesto = {
           id: "",
-          cantidad: 0, // Asegúrate de que cantidad sea un número (float)
+          cantidad: 0,
           id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
-          fecha : null,
+          fecha: fecha,
           objetivo: objetivo
         };
     
-        // Realiza una solicitud POST a tu API de FastAPI para registrar el presupuesto
         try {
           const response = await fetch('http://localhost:8000/presupuesto/', {
             method: 'POST',
@@ -27,13 +25,9 @@ function PresupuestoMensualScreen() {
             body: JSON.stringify(presupuesto),
           });
     
-          // Verifica si la solicitud fue exitosa
           if (response.ok) {
-            // El presupuesto se registró correctamente
-            // Puedes redirigir al presupuesto o mostrar un mensaje de éxito
-            console.log('presupuesto registrado exitosamente');
+            console.log('Presupuesto registrado exitosamente');
           } else {
-            // Maneja errores de registro aquí
             console.error('Error al registrar presupuesto');
           }
         } catch (error) {
@@ -47,8 +41,8 @@ function PresupuestoMensualScreen() {
             <TextInput
                 style={styles.input}
                 placeholder="Presupuesto $"
-                onChangeText={(text) => setObjetivo(text)} // Cambia setMonto a setObjetivo
-                value={objetivo} // Cambia monto a objetivo
+                onChangeText={(text) => setObjetivo(text)}
+                value={objetivo}
                 keyboardType="numeric"
             />
             <View style={styles.datePickerContainer}>
@@ -62,7 +56,10 @@ function PresupuestoMensualScreen() {
               />
             </View>
 
-            <Button title="Aceptar Ingreso" color="#63a1ff" onPress={registrarPresupuesto} />
+            <Button 
+            title="Aceptar Ingreso" 
+            color="#63a1ff" 
+            onPress={registrarPresupuesto} />
         </View>
     );
 }
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0F0E0E',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 20,
+        padding: 20, 
     },
     text: {
         fontSize: 24,
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     datePicker: {
-        width: '80%', // Ajusta el ancho para que coincida con los TextInput
+        width: '80%',
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
@@ -103,8 +100,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     datePickerContainer: {
-      alignItems: 'center',  // Centra el contenido horizontalmente
-      marginBottom: 20,     // Espacio entre el DatePicker y el botón
+      alignItems: 'center',
+      marginBottom: 220,
     },
-    
+    buttonSpacing: {
+      marginTop: 150,
+      marginBottom: 150,
+    },
 });
