@@ -77,11 +77,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#0F0E0E',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        padding: 20,
     },
     text: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#fff',
+        marginBottom: 20,
     },
     input: {
         width: '80%',

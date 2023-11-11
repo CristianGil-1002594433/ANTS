@@ -16,14 +16,16 @@ function ConsultaPresupuestoMensualScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Consulta de Presupuesto Mensual</Text>
-            <Text style={styles.label}>Fecha</Text>
-            <DatePicker
+            <View style={styles.datePickerContainer}>
+              <Text style={styles.text}>Fecha</Text>
+              <DatePicker
                 style={styles.datePicker}
                 selected={fecha}
                 onChange={(date) => setFecha(date)}
                 dateFormat="yyyy-MM"
                 showMonthYearPicker
-            />
+              />
+            </View>
             <Button title="Consultar" color="#63a1ff" onPress={handleConsultarPresupuesto} />
             {consultarPresupuesto && (
                 <View style={styles.resultContainer}>
@@ -125,6 +127,10 @@ const obtenerPresupuestoPorFecha = (fecha) => {
       fontSize: 16,
       color: '#0F0E0E',
     },
+    datePickerContainer: {
+        alignItems: 'center',  // Centra el contenido horizontalmente
+        marginBottom: 20,     // Espacio entre el DatePicker y el botón
+      },
   });
 
 export default ConsultaPresupuestoMensualScreen;
