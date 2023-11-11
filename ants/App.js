@@ -85,7 +85,7 @@ function LoginScreen({ navigation }) {
         onPress={handleLogin}
         color="#63a1ff" 
         style={styles.button} />
-      <View style={{ marginTop: 10 }} /> {/* Espacio entre los botones */}
+      <View style={{ marginTop: 15 }} /> {/* Espacio entre los botones */}
       <Button 
         title="Cancelar" 
         onPress={handleCancel} 
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0F0E0E',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 15
   },
   circularImage: {
     width: 200,
@@ -127,6 +128,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     backgroundColor: '#fff',
+    marginTop: 15
   },
   button: {
     height: 40, // Establece la altura deseada
@@ -134,5 +136,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     padding: 10,
+    marginTop: 15
   },
 });
