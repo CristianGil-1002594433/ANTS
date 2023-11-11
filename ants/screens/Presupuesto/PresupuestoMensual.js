@@ -47,11 +47,10 @@ function PresupuestoMensualScreen() {
             <TextInput
                 style={styles.input}
                 placeholder="Presupuesto $"
-                onChangeText={(text) => setMonto(text)}
-                value={monto}
-
+                onChangeText={(text) => setObjetivo(text)} // Cambia setMonto a setObjetivo
+                value={objetivo} // Cambia monto a objetivo
                 keyboardType="numeric"
-            />
+/>
             <Text style={styles.text}>Fecha</Text>
             <DatePicker
                 style={[styles.datePicker, { marginBottom: 20 }]} // Agrega marginBottom para separar del botón
@@ -60,7 +59,7 @@ function PresupuestoMensualScreen() {
                 dateFormat="yyyy-MM"
                 showMonthYearPicker
             />
-            <Button title="Aceptar Ingreso" color="#63a1ff" onPress={handleAceptarIngreso} />
+            <Button title="Aceptar Ingreso" color="#63a1ff" onPress={registrarPresupuesto} />
         </View>
     );
 }
