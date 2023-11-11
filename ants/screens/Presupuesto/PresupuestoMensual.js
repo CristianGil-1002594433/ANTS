@@ -8,14 +8,16 @@ function PresupuestoMensualScreen() {
     const [fecha, setFecha] = useState(null); // Estado para la fecha
 
     const registrarPresupuesto = async () => {
-        // Crea un objeto de presupuesto con los datos ingresados por el usuario
-        const presupuesto = {
-          id: "",
-          cantidad: 0, // Asegúrate de que cantidad sea un número (float)
-          id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
-          fecha : null,
-          objetivo: objetivo
-        };
+      // Convierte la fecha a string en el formato 'yyyy-MM' si está seleccionada
+      const fechaFormato = fecha ? fecha.toISOString().substring(0, 7) : null;
+
+      const presupuesto = {
+        id: "",
+        cantidad: 0,
+        id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
+        fecha: fechaFormato, // Usa la fecha convertida
+        objetivo: objetivo
+      };
     
         // Realiza una solicitud POST a tu API de FastAPI para registrar el presupuesto
         try {
