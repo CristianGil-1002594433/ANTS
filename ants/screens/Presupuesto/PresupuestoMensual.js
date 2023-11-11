@@ -50,15 +50,18 @@ function PresupuestoMensualScreen() {
                 onChangeText={(text) => setObjetivo(text)} // Cambia setMonto a setObjetivo
                 value={objetivo} // Cambia monto a objetivo
                 keyboardType="numeric"
-/>
-            <Text style={styles.text}>Fecha</Text>
-            <DatePicker
-                style={[styles.datePicker, { marginBottom: 20 }]} // Agrega marginBottom para separar del botón
+            />
+            <View style={styles.datePickerContainer}>
+              <Text style={styles.text}>Fecha</Text>
+              <DatePicker
+                style={styles.datePicker}
                 selected={fecha}
                 onChange={(date) => setFecha(date)}
                 dateFormat="yyyy-MM"
                 showMonthYearPicker
-            />
+              />
+            </View>
+
             <Button title="Aceptar Ingreso" color="#63a1ff" onPress={registrarPresupuesto} />
         </View>
     );
@@ -97,4 +100,9 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#fff',
     },
+    datePickerContainer: {
+      alignItems: 'center',  // Centra el contenido horizontalmente
+      marginBottom: 20,     // Espacio entre el DatePicker y el botón
+    },
+    
 });
