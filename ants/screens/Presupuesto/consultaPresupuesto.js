@@ -129,7 +129,7 @@ const obtenerPresupuestoPorFecha = (fecha) => {
     },
     datePickerContainer: {
         alignItems: 'center',  // Centra el contenido horizontalmente
-        marginBottom: 20,     // Espacio entre el DatePicker y el botón
+        marginBottom: 220,     // Espacio entre el DatePicker y el botón
       },
   });
 
