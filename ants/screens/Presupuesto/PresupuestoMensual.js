@@ -47,27 +47,22 @@ function PresupuestoMensualScreen() {
             <TextInput
                 style={styles.input}
                 placeholder="Presupuesto $"
-                onChangeText={(text) => setMonto(text)}
-                value={monto}
-
+                onChangeText={(text) => setObjetivo(text)} // Cambia setMonto a setObjetivo
+                value={objetivo} // Cambia monto a objetivo
                 keyboardType="numeric"
             />
-            <Text style={styles.text}>Fecha</Text>
-            <DatePicker
-                style={styles.datePicker} // Establece un estilo específico para DatePicker
+            <View style={styles.datePickerContainer}>
+              <Text style={styles.text}>Fecha</Text>
+              <DatePicker
+                style={styles.datePicker}
                 selected={fecha}
                 onChange={(date) => setFecha(date)}
                 dateFormat="yyyy-MM"
                 showMonthYearPicker
-            />
-            <Text style={styles.text}>Descripción</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Descripcion"
-                onChangeText={(text) => setDescripcion(text)}
-                value={descripcion}
-            />
-            <Button title="Aceptar Ingreso" color="#63a1ff" onPress={handleAceptarIngreso} />
+              />
+            </View>
+
+            <Button title="Aceptar Ingreso" color="#63a1ff" onPress={registrarPresupuesto} />
         </View>
     );
 }
@@ -103,7 +98,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         padding: 10,
-        marginBottom: 20,
         backgroundColor: '#fff',
     },
+    datePickerContainer: {
+      alignItems: 'center',  // Centra el contenido horizontalmente
+      marginBottom: 20,     // Espacio entre el DatePicker y el botón
+    },
+    
 });

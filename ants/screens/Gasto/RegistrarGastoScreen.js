@@ -64,6 +64,7 @@ const RegistrarGastoFormulario = () => {
             >
                 <Picker.Item label="Transporte" value="transporte" />
                 <Picker.Item label="Comida" value="comida" />
+                <Picker.Item label="Gasolina" value="gasolina" />
                 <Picker.Item label="Otros" value="otros" />
         </Picker>
         {descripcion === 'otros' && (
