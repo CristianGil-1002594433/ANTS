@@ -8,13 +8,17 @@ function PresupuestoMensualScreen() {
     const [fecha, setFecha] = useState(null);
 
     const registrarPresupuesto = async () => {
-        const presupuesto = {
-          id: "",
-          cantidad: 0,
-          id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
-          fecha: fecha,
-          objetivo: objetivo
-        };
+
+      // Convierte la fecha a string en el formato 'yyyy-MM' si está seleccionada
+      const fechaFormato = fecha ? fecha.toISOString().substring(0, 7) : null;
+
+      const presupuesto = {
+        id: "",
+        cantidad: 0,
+        id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
+        fecha: fechaFormato, // Usa la fecha convertida
+        objetivo: objetivo
+      };
     
         try {
           const response = await fetch('http://localhost:8000/presupuesto/', {
