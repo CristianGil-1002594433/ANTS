@@ -19,7 +19,7 @@ function PresupuestoMensualScreen() {
     const formattedFecha = fecha ? fecha.toISOString().substring(0, 7) : null; // Formatea la fecha como "yyyy-MM" si está presente
 
     // Verifica si el objetivo es un número entero antes de enviarlo
-    if (!validarNumeroEntero(objetivo ||(valor===0))) {
+    if (!validarNumeroEntero(objetivo || (valor===0))) {
       setMensajeError("Por favor, ingresa un número entero en el campo de Presupuesto.");
       setMensajeExito('');
       return;

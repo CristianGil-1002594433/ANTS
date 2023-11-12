@@ -5,6 +5,9 @@ const RegistrarGastoFormulario = () => {
   const [cantidad, setCantidad] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [otro, setOtros] = useState('');
+  const [mensajeExito, setMensajeExito] = useState('');
+  const [mensajeError, setMensajeError] = useState("");
+
 
   const registrarGasto = async () => {
     // Validar que la cantidad no sea negativa
@@ -36,10 +39,14 @@ const RegistrarGastoFormulario = () => {
       if (response.ok) {
         // El gasto se registró correctamente
         // Puedes redirigir al gasto o mostrar un mensaje de éxito
+        setMensajeExito('Gasto registrado exitosamente');
         console.log('Gasto registrado exitosamente');
+        setMensajeError("");
       } else {
         // Maneja errores de registro aquí
         console.error('Error al registrar gasto');
+        setMensajeError("Error al registrar gasto.");
+        setMensajeExito('');
       }
     } catch (error) {
       console.error('Error de red al registrar gasto:', error);
@@ -78,6 +85,8 @@ const RegistrarGastoFormulario = () => {
                         </View>
             )}
       <Button title="Registrar" onPress={registrarGasto} />
+      {mensajeExito !== '' && <Text style={styles.successText}>{mensajeExito}</Text>}
+      {mensajeError && <Text style={styles.errorText}>{mensajeError}</Text>}
     </View>
   );
 };
@@ -95,6 +104,18 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#fff',
+    },
+    successText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: 'green',
+      marginBottom: 20,
+    },
+    errorText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#FF0000',
+      marginBottom: 20,
     },
     input: {
         width: '80%',
