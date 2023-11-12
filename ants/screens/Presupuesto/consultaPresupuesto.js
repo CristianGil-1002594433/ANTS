@@ -66,7 +66,9 @@ function ConsultaPresupuestoMensualScreen() {
 
 
   return (
+    
     <View style={styles.container}>
+     
       <Text style={styles.text}>Consulta de Presupuesto Mensual</Text>
       <View style={styles.datePickerContainer}>
         <Text style={styles.text}>Fecha</Text>

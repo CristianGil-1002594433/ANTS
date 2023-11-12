@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0F0E0E',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 15
+    
   },
   circularImage: {
     width: 200,
