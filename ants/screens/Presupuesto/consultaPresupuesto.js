@@ -1,53 +1,69 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos CSS
 
 function ConsultaPresupuestoMensualScreen() {
   const [fecha, setFecha] = useState(null);
   const [consultarPresupuesto, setConsultarPresupuesto] = useState(null);
   const [mensajeError, setMensajeError] = useState("");
 
-  const obtenerGastos = async (fechaFormato) => {
-    const response = await fetch(`http://localhost:8000/gastos/${fechaFormato}`);
-    return await response.json();
-  };
-
-  const obtenerPresupuestos = async (fechaFormato) => {
-    const response = await fetch(`http://localhost:8000/presupuestos/${fechaFormato}`);
-    return await response.json();
-  };
-
-  const calcularTotalGastos = (gastos) => {
-    return Object.values(gastos).reduce((total, gasto) => total + gasto.cantidad, 0);
-  };
-
   const handleConsultarPresupuesto = async () => {
     try {
+      // Verificar si fecha es nula y mostrar un mensaje de error si es el caso
       if (!fecha) {
         setMensajeError("Por favor, selecciona una fecha antes de consultar.");
-        setConsultarPresupuesto(null);
+        setConsultarPresupuesto(null); // Limpia cualquier resultado anterior
         return;
+      } else {
+        setMensajeError(""); // Limpia el mensaje de error si se recibieron datos válidos
       }
       
-      const fechaFormato = fecha.toISOString().substring(0, 7);
-      const gastos = await obtenerGastos(fechaFormato);
-      const presupuestos = await obtenerPresupuestos(fechaFormato);
-
-      const totalGastos = calcularTotalGastos(gastos);
-      const presupuestoIngresado = Object.values(presupuestos).length > 0 ? Object.values(presupuestos)[0].objetivo : 0;
-
-      if (Object.keys(gastos).length === 0 && Object.keys(presupuestos).length === 0) {
-        setMensajeError("No se encontraron presupuestos para el mes.");
-        setConsultarPresupuesto(null);
+      // Convertir la fecha seleccionada a un string en formato 'yyyy-MM'
+      const fechaFormato = fecha ? fecha.toISOString().substring(0, 7) : '';
+  
+      // Obtener gastos solo para el mes seleccionado
+      const gastosResponse = await fetch(`http://localhost:8000/gastos/${fechaFormato}`);
+      const gastos = await gastosResponse.json();
+      const gastosArray = Object.values(gastos);
+  
+      // Obtener presupuestos
+      const presupuestosResponse = await fetch(`http://localhost:8000/presupuestos/${fechaFormato}`);
+      const presupuestos = await presupuestosResponse.json();
+      const presupuestosArray = Object.values(presupuestos);
+  
+      let totalGastos = 0;
+  
+      if (Array.isArray(gastosArray)) {
+        gastosArray.forEach((gasto) => {
+          totalGastos += gasto.cantidad;
+        });
       } else {
-        setConsultarPresupuesto({ detalles: Object.values(gastos), presupuestoIngresado, presupuestoActual: presupuestoIngresado - totalGastos });
-        setMensajeError("");
+        console.error("Los gastos recibidos no son un array:", gastos);
       }
-    } catch (error) {
-      console.error('Error al obtener datos:', error);
+  
+      const presupuestoIngresado = presupuestosArray.length > 0 ? presupuestosArray[0].objetivo : 0;
+
+    const presupuestoActual = presupuestoIngresado - totalGastos;
+    // Verificar si se encontraron datos
+    if (presupuestosArray.length === 0) {
+      setMensajeError("No se encontraron presupuestos para el mes.");
+      setConsultarPresupuesto(null); // Limpia cualquier resultado anterior
+    } else {
+      setConsultarPresupuesto({
+        detalles: gastosArray,
+        presupuestoIngresado,
+        presupuestoActual
+      });
+      setMensajeError(""); // Limpia el mensaje de error si se recibieron datos válidos
     }
-  };
+
+  } catch (error) {
+    console.error('Error al obtener datos:', error);
+  }
+};
+
+
 
   return (
     <View style={styles.container}>

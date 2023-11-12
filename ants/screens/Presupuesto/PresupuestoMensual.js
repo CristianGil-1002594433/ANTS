@@ -6,9 +6,24 @@ import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos CSS
 function PresupuestoMensualScreen() {
   const [objetivo, setObjetivo] = useState('');
   const [fecha, setFecha] = useState(null);
+  const [mensajeExito, setMensajeExito] = useState('');
+  const [mensajeError, setMensajeError] = useState("");
+
+  // Función personalizada para validar números enteros
+  const validarNumeroEntero = (valor) => {
+    const regex = /^\d+$/; // Expresión regular para números enteros
+    return regex.test(valor);
+  };
 
   const registrarPresupuesto = async () => {
     const formattedFecha = fecha ? fecha.toISOString().substring(0, 7) : null; // Formatea la fecha como "yyyy-MM" si está presente
+
+    // Verifica si el objetivo es un número entero antes de enviarlo
+    if (!validarNumeroEntero(objetivo ||(valor===0))) {
+      setMensajeError("Por favor, ingresa un número entero en el campo de Presupuesto.");
+      setMensajeExito('');
+      return;
+    }
 
     const presupuesto = {
       id: "",
@@ -18,7 +33,6 @@ function PresupuestoMensualScreen() {
       objetivo: objetivo
     };
 
-
     try {
       const response = await fetch('http://localhost:8000/presupuesto/', {
         method: 'POST',
@@ -27,11 +41,17 @@ function PresupuestoMensualScreen() {
         },
         body: JSON.stringify(presupuesto),
       });
-
       if (response.ok) {
         console.log('Presupuesto registrado exitosamente');
+        setMensajeExito('Presupuesto registrado exitosamente');
+        // Opcionalmente, puedes limpiar los campos después de un registro exitoso
+        setObjetivo('');
+        setFecha(null);
+        setMensajeError("");
       } else {
         console.error('Error al registrar presupuesto');
+        setMensajeError("Error al registrar presupuesto.");
+        setMensajeExito('');
       }
     } catch (error) {
       console.error('Error de red al registrar presupuesto:', error);
@@ -57,6 +77,7 @@ function PresupuestoMensualScreen() {
           dateFormat="yyyy-MM"
           showMonthYearPicker
         />
+
       </View>
 
       {/* Condición para mostrar u ocultar el botón */}
@@ -67,6 +88,8 @@ function PresupuestoMensualScreen() {
           onPress={registrarPresupuesto}
         />
       )}
+      {mensajeExito !== '' && <Text style={styles.successText}>{mensajeExito}</Text>}
+      {mensajeError && <Text style={styles.errorText}>{mensajeError}</Text>}
     </View>
   );
 }
@@ -85,6 +108,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 20,
+  },
+  successText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'green',
+    marginBottom: 20,
+  },
+  errorText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF0000',
     marginBottom: 20,
   },
   input: {
