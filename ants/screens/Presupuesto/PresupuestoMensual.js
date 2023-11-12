@@ -8,13 +8,16 @@ function PresupuestoMensualScreen() {
   const [fecha, setFecha] = useState(null);
 
   const registrarPresupuesto = async () => {
+    const formattedFecha = fecha ? fecha.toISOString().substring(0, 7) : null; // Formatea la fecha como "yyyy-MM" si está presente
+
     const presupuesto = {
       id: "",
       cantidad: 0,
       id_usuario: "3cd5595f-d787-48b2-85a3-c931da0354f0",
-      fecha: fecha,
+      fecha: formattedFecha, // Utiliza la fecha formateada
       objetivo: objetivo
     };
+
 
     try {
       const response = await fetch('http://localhost:8000/presupuesto/', {

@@ -1,46 +1,49 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import DatePicker from 'react-datepicker';
-//import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos CSS
+import 'react-datepicker/dist/react-datepicker.css';
 
 function ConsultaPresupuestoMensualScreen() {
   const [fecha, setFecha] = useState(null);
-  const [presupuesto, setPresupuesto] = useState(0);
   const [consultarPresupuesto, setConsultarPresupuesto] = useState(null);
+  const [mensajeError, setMensajeError] = useState("");
+
+  const obtenerGastos = async (fechaFormato) => {
+    const response = await fetch(`http://localhost:8000/gastos/${fechaFormato}`);
+    return await response.json();
+  };
+
+  const obtenerPresupuestos = async (fechaFormato) => {
+    const response = await fetch(`http://localhost:8000/presupuestos/${fechaFormato}`);
+    return await response.json();
+  };
+
+  const calcularTotalGastos = (gastos) => {
+    return Object.values(gastos).reduce((total, gasto) => total + gasto.cantidad, 0);
+  };
 
   const handleConsultarPresupuesto = async () => {
     try {
-      // Convertir la fecha seleccionada a un string en formato 'yyyy-MM'
-      const fechaFormato = fecha ? fecha.toISOString().substring(0, 7) : '';
-
-      // Obtener gastos
-      const gastosResponse = await fetch(`http://localhost:8000/gastos/${fechaFormato}`);
-      const gastos = await gastosResponse.json();
-      const gastosArray = Object.values(gastos);
-
-      // Obtener presupuestos
-      const presupuestosResponse = await fetch(`http://localhost:8000/presupuestos/${fechaFormato}`);
-      const presupuestos = await presupuestosResponse.json();
-      const presupuestosArray = Object.values(presupuestos)
-      console.log(presupuestosArray)
-
-      let totalGastos = 0;
-      if (Array.isArray(gastosArray)) {
-        gastosArray.forEach(gasto => {
-          totalGastos += gasto.cantidad;
-        });
-      } else {
-        console.error("Los gastos recibidos no son un array:", gastos);
+      if (!fecha) {
+        setMensajeError("Por favor, selecciona una fecha antes de consultar.");
+        setConsultarPresupuesto(null);
+        return;
       }
+      
+      const fechaFormato = fecha.toISOString().substring(0, 7);
+      const gastos = await obtenerGastos(fechaFormato);
+      const presupuestos = await obtenerPresupuestos(fechaFormato);
 
-      const presupuestoIngresado = presupuestosArray.length > 0 ? presupuestosArray[0].objetivo : 0; // Ejemplo de cómo obtener el presupuesto ingresado
-      const presupuestoActual = presupuestoIngresado - totalGastos;
-      setConsultarPresupuesto({
-        detalles: gastosArray,
-        presupuestoIngresado,
-        presupuestoActual
-      });
+      const totalGastos = calcularTotalGastos(gastos);
+      const presupuestoIngresado = Object.values(presupuestos).length > 0 ? Object.values(presupuestos)[0].objetivo : 0;
 
+      if (Object.keys(gastos).length === 0 && Object.keys(presupuestos).length === 0) {
+        setMensajeError("No se encontraron presupuestos para el mes.");
+        setConsultarPresupuesto(null);
+      } else {
+        setConsultarPresupuesto({ detalles: Object.values(gastos), presupuestoIngresado, presupuestoActual: presupuestoIngresado - totalGastos });
+        setMensajeError("");
+      }
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
@@ -59,6 +62,7 @@ function ConsultaPresupuestoMensualScreen() {
           showMonthYearPicker
         />
       </View>
+      {mensajeError && <Text style={styles.errorText}>{mensajeError}</Text>}
       <Text style={styles.text}>Fecha Seleccionada: {fecha ? fecha.toISOString().substring(0, 7) : 'Ninguna'}</Text>
       <Button title="Consultar" color="#63a1ff" onPress={handleConsultarPresupuesto} />
       {consultarPresupuesto && (
@@ -81,7 +85,6 @@ function ConsultaPresupuestoMensualScreen() {
     </View>
   );
 }
-
 const obtenerPresupuestoPorFecha = (fecha) => {
   const presupuestoIngresado = 1000;
   const gastosRegistrados = 200;
@@ -108,6 +111,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 20,
+  },  
+  errorText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF0000',
     marginBottom: 20,
   },
   label: {
