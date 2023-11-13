@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 
 const Stack = createStackNavigator();
 
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: '#e33627',
     width: '80%',
     padding: 15,
     marginBottom: 20,
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
   buttonSpacing: {
     marginTop: 50,
   },
+  
 });
 
 export default MenuScreen;

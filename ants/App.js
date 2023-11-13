@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, TextInput, Button, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Image,TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MenuScreen from './screens/Menu/menu'; // Importa la pantalla del menú
 import GastoHormigaScreen from './screens/Gasto/RegistrarGastoScreen'; // Importa la pantalla de "Ingresar Gasto Hormiga"
-import PresupuestoMensualScreen from './screens/Presupuesto/PresupuestoMensual'; 
+import PresupuestoMensualScreen from './screens/Presupuesto/PresupuestoMensual';
 import ConsultaPresupuestoMensualScreen from './screens/Presupuesto/consultaPresupuesto';
+
 
 
 const Stack = createStackNavigator();
@@ -80,17 +81,18 @@ function LoginScreen({ navigation }) {
         placeholder="Contraseña"
         secureTextEntry={true}
       />
-      <Button
-        title="Iniciar Sesión" 
+
+      <TouchableOpacity
         onPress={handleLogin}
-        color="#63a1ff" 
-        style={styles.button} />
-      <View style={{ marginTop: 15 }} /> {/* Espacio entre los botones */}
-      <Button 
-        title="Cancelar" 
-        onPress={handleCancel} 
-        color="#63a1ff" 
-        style={styles.button} />
+        style={styles.button}>
+        <Text style={styles.buttonText}>Iniciar Sesión</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={handleCancel}
+        style={[styles.button, styles.cancelButton]}>
+        <Text style={styles.buttonText}>Cancelar</Text>
+      </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0F0E0E',
     alignItems: 'center',
     justifyContent: 'center',
-    
+
   },
   circularImage: {
     width: 200,
@@ -131,11 +133,20 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   button: {
-    height: 40, // Establece la altura deseada
-    borderColor: '#63a1ff',
-    borderWidth: 2,
-    borderRadius: 10,
+    backgroundColor: '#e33627',
+    width: '20%',
     padding: 10,
-    marginTop: 15
+    margin: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2, // Agrega sombra en Android
+    shadowOpacity: 0.3, // Agrega sombra en iOS
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 }, // Posición de la sombra en iOS
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
   },
 });
