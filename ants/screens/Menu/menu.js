@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 
 
 const Stack = createStackNavigator();
@@ -26,6 +27,10 @@ function MenuScreen() {
 
   return (
     <View style={styles.container}>
+       <Image
+        source={require('../../recursos/Logo.jpeg')} // Asegúrate de que la ruta y el nombre del archivo sean correctos
+        style={styles.logo} // Aplica estilos como sea necesario
+      />
       <TouchableOpacity style={styles.button} onPress={handleIngresarGasto}>
         <Text style={styles.buttonText}>Ingresar Gasto Hormiga</Text>
       </TouchableOpacity>
@@ -62,6 +67,11 @@ const styles = StyleSheet.create({
   },
   buttonSpacing: {
     marginTop: 50,
+  }, logo: {
+    width: 150, // Establece el ancho deseado
+    height: 150, // Establece la altura deseada
+    marginBottom: 30,
+    borderRadius: 100 // Agrega espacio debajo de la imagen
   },
   
 });
